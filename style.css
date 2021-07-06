@@ -1,0 +1,142 @@
+*{
+    box-sizing: border-box;
+    font-family: Roboto,RobotoDraft,Helvetica,Arial,sans-serif;
+    color: rgba(54, 54, 54, 0.829);
+    
+}
+::-webkit-scrollbar {
+    width: 12px;
+}
+
+::-webkit-scrollbar-track {
+    background: #ece8e8;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #888;
+}
+body{
+    margin: 0;
+}
+
+.container {
+    width: 100vw;
+    height: 100vh;
+}
+
+.title-bar{
+    border-bottom: 1px solid rgba(184, 184, 184, 0.692);
+    height: 4%;
+    font-size: 14px;
+    display: flex;
+    padding-left: 16px;
+    justify-content: center;
+    align-items: center;
+    outline: none;
+}
+
+.menu-bar{
+    border-bottom: 1px solid rgba(184, 184, 184, 0.692);
+    display: flex;
+    align-items: center;
+    font-size: 12px;
+    height: 4%;
+}
+
+.menu-bar div{
+    margin-left: 16px;
+    user-select: none;
+    cursor: pointer;
+}
+
+.tool-bar{
+    border-bottom: 1px solid rgba(184, 184, 184, 0.692);
+    height: 6%;
+}
+
+.formula-bar{
+    display: flex;
+    height: 4%;
+}
+
+.formula-bar input{
+    display: block;
+    width: 88%;
+    height: 100%;
+    outline: none;
+    border: none;
+    padding-left: 10px;
+}
+
+.formula-bar .selected-cell-div{
+    height: 100%;
+    width: 12%;
+    font-size: 12px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-right: 1px solid rgba(184, 184, 184, 0.692);
+}
+
+
+.grid-area{
+    height: 78%;
+    border-bottom: 1px solid rgba(184, 184, 184, 0.692);
+    overflow: auto;
+}
+
+.sheets-area{
+    height: 4%;
+    border-bottom: 1px solid rgba(184, 184, 184, 0.692);
+}
+
+.blank-corner{
+    width: 50px;
+    height: 30px;
+    position: fixed;
+    top: 18vh;
+    z-index: 10;
+    background-color: rgb(100, 98, 98);
+}
+.row-number-section{
+    display: inline-block;
+    margin-top: 30px;
+    user-select: none;
+}
+
+.row-number{
+    font-size: 12px;
+    width: 50px;
+    height: 30px;
+    border: 1px solid rgba(184, 184, 184, 0.692);
+    background-color: rgba(247, 247, 247, 0.932);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.row-number:hover,.column-number:hover{
+    background-color: rgba(184, 184, 184, 0.692);
+}
+
+.column-number-section{
+    height: 30px;
+    position: fixed;
+    top: 18vh;
+    left:50px;
+    display: flex;
+    user-select: none;
+}
+
+.column-number{
+    font-size: 12px;
+    width: 80px;
+    height: 30px;
+    border: 1px solid rgba(184, 184, 184, 0.692);
+    background-color: rgba(247, 247, 247, 0.932);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+
