@@ -5,18 +5,19 @@
     
 }
 ::-webkit-scrollbar {
-    width: 12px;
+   display: none;
 }
 
 ::-webkit-scrollbar-track {
-    background: #ece8e8;
+    background: rgb(197, 212, 219);
 }
 
 ::-webkit-scrollbar-thumb {
-    background: #888;
+    background: rgb(73, 118, 141);
 }
 body{
     margin: 0;
+    
 }
 
 .container {
@@ -33,6 +34,7 @@ body{
     justify-content: center;
     align-items: center;
     outline: none;
+    background-color: rgb(255, 255, 255);
 }
 
 .menu-bar{
@@ -41,22 +43,26 @@ body{
     align-items: center;
     font-size: 12px;
     height: 4%;
+    background-color: rgb(255, 255, 255);
 }
 
 .menu-bar div{
     margin-left: 16px;
     user-select: none;
     cursor: pointer;
+
 }
 
 .tool-bar{
     border-bottom: 1px solid rgba(184, 184, 184, 0.692);
     height: 6%;
+    background-color: rgb(255, 255, 255);
 }
 
 .formula-bar{
     display: flex;
     height: 4%;
+    background-color: rgb(255, 255, 255);
 }
 
 .formula-bar input{
@@ -80,12 +86,14 @@ body{
 
 
 .grid-area{
+    position: relative;
     height: 78%;
     border-bottom: 1px solid rgba(184, 184, 184, 0.692);
     overflow: auto;
 }
 
-.sheets-area{
+.sheets-section{
+    background-color: rgb(255, 255, 255);
     height: 4%;
     border-bottom: 1px solid rgba(184, 184, 184, 0.692);
 }
@@ -96,47 +104,75 @@ body{
     position: fixed;
     top: 18vh;
     z-index: 10;
-    background-color: rgb(100, 98, 98);
+    background-color: rgb(19, 53, 70);
 }
 .row-number-section{
     display: inline-block;
-    margin-top: 30px;
+    position: fixed;
+    top: calc(18vh + 30px);
     user-select: none;
+    z-index: -10;
 }
 
 .row-number{
-    font-size: 12px;
     width: 50px;
+}
+.column-number{
+    width: 80px; 
+    flex-shrink: 0;
+}
+
+.row-column-container{
+    font-size: 12px;
     height: 30px;
     border: 1px solid rgba(184, 184, 184, 0.692);
-    background-color: rgba(247, 247, 247, 0.932);
+    background-color: rgb(247, 247, 247);
     display: flex;
     justify-content: center;
     align-items: center;
+    /* transition: all ease-in 100ms; */
 }
-
 .row-number:hover,.column-number:hover{
-    background-color: rgba(184, 184, 184, 0.692);
+    color: white;
+    background-color: rgb(161, 161, 161);
 }
 
 .column-number-section{
     height: 30px;
+    width: 100vw;
     position: fixed;
     top: 18vh;
     left:50px;
     display: flex;
     user-select: none;
+    z-index: 9;
 }
 
-.column-number{
-    font-size: 12px;
+.cell-section{
+    position: absolute;
+    overflow: auto;
+    top: 30px;
+    left: 50px;
+    height: calc( 78vh - 30px );
+    width: calc( 100vw - 50px );
+}
+
+
+
+.row{
+    display: flex;
+}
+
+.cell{
     width: 80px;
     height: 30px;
-    border: 1px solid rgba(184, 184, 184, 0.692);
-    background-color: rgba(247, 247, 247, 0.932);
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    background-color: white;
+    border: 1px solid rgba(218, 218, 218, 0.856);
+    flex-shrink: 0;
+    outline: none;
 }
 
-
+.selected-cell{
+    background-color: white;
+    border: 3px solid rgba(111, 155, 212, 0.856);
+}
