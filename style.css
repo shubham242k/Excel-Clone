@@ -53,10 +53,23 @@ body{
 
 }
 
-.tool-bar{
-    border-bottom: 1px solid rgba(184, 184, 184, 0.692);
-    height: 6%;
+.file-option{
+    position: relative;
+}
+.file-option-dropdown{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    position: absolute;
     background-color: rgb(255, 255, 255);
+    width: 100px;
+    left: -20px;
+    box-shadow: 0 4px 8px 0 rgba(102, 102, 102, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    bottom: -80px;
+}
+.file-option-dropdown p{
+    background-color: white;
+    padding-left: 10px;
 }
 
 .formula-bar{
@@ -81,7 +94,7 @@ body{
     display: flex;
     justify-content: center;
     align-items: center;
-    border-right: 1px solid rgba(184, 184, 184, 0.692);
+    border-right: 1px solid rgba(184, 184, 184, 0.692); 
 }
 
 
@@ -175,4 +188,76 @@ body{
 .selected-cell{
     background-color: white;
     border: 3px solid rgba(111, 155, 212, 0.856);
+}
+
+
+
+.tool-bar{
+    display: flex;
+    border-bottom: 1px solid rgba(184, 184, 184, 0.692);
+    height: 6%;
+    background-color: rgb(255, 255, 255);
+    align-items: center;
+}
+
+.tool-subcontainer{
+    height: 80%;
+    width: 120px;
+    border-left: .5px solid rgba(204, 203, 203, 0.692);
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+}
+
+.font-section{
+    width: 200px;
+}
+
+.select-bar{
+    outline: none;
+    border: 1px solid rgb(221, 221, 221);
+}
+
+.select-bar.font-style{
+    width: 120px;
+}
+.select-bar.font-size{
+    width: 50px;
+}
+
+/* .text-style-section{
+    
+}
+
+.text-alignment-section{
+
+} */
+.material-icons {
+    cursor: pointer;
+    font-family: 'Material Icons';
+    font-weight: normal;
+    font-style: normal;
+    font-size: 18px;  /* Preferred icon size */
+    display: inline-block;
+    line-height: 1;
+    text-transform: none;
+    letter-spacing: normal;
+    word-wrap: normal;
+    white-space: nowrap;
+    direction: ltr;
+  padding: 5px;
+    /* Support for all WebKit browsers. */
+    -webkit-font-smoothing: antialiased;
+    /* Support for Safari and Chrome. */
+    text-rendering: optimizeLegibility;
+  
+    /* Support for Firefox. */
+    -moz-osx-font-smoothing: grayscale;
+  
+    /* Support for IE. */
+    font-feature-settings: 'liga';
+}
+
+.material-icons:hover{
+    background-color: rgba(221, 220, 220, 0.692);
 }

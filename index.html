@@ -4,6 +4,8 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
+      rel="stylesheet">
     <link rel="stylesheet" href="style.css">
     <title>Document</title>
 </head>
@@ -11,15 +13,41 @@
     <div class="container">
         <div class="title-bar" contenteditable="">Document 1</div>
         <div class="menu-bar">
-            <div>File</div>
-            <div>Edit</div>
-            <div>View</div>
-            <div>Tool</div>
-            <div>Format</div>
-            <div>Data</div>
-            <div>Help</div>
+            <div class="file-option" open-status="false">File</div>
+            <div class="help-option" open-status="false">Help</div>
         </div>
-        <div class="tool-bar"></div>
+        <div class="tool-bar">
+             
+            <div class="text-alignment-section tool-subcontainer">
+                <span class="material-icons">format_align_left</span>
+                <span class="material-icons">format_align_center</span>
+                <span class="material-icons">format_align_right</span>
+            </div>
+            <div class="text-style-section tool-subcontainer">
+                <span class="bold-icon material-icons">format_bold</span>
+                <span class="material-icons">format_italic</span>
+                <span class="material-icons">format_underlined</span>
+            </div>
+            <div class="font-section tool-subcontainer">
+                <select class = "select-bar font-style" name="font-family">
+                    <option >Arial</option>
+                    <option >Arial</option>
+                    <option >Arial</option>
+                </select>
+
+                <select class = "select-bar font-size" name="font-size">
+                    <option >8</option>
+                    <option >10</option>
+                    <option >14</option>
+                </select>
+            </div>
+            
+            <div class="color-section tool-subcontainer">
+                <span class="material-icons">format_color_fill</span>
+                <span class="material-icons">format_color_text</span>
+            </div>
+            
+        </div>
         <div class="formula-bar">
             <div class="selected-cell-div"></div>
             <input type="text" class="formula-input-box">
@@ -38,5 +66,6 @@
     </div>
 
     <script src="script.js"></script>
+    <script src="styleScript.js"></script>
 </body>
 </html>

@@ -3,7 +3,7 @@ let rowsContainer = document.querySelector(".row-number-section");
 let columnsContainer = document.querySelector(".column-number-section");
 let cellAddressShower = document.querySelector(".selected-cell-div");
 let formulaInput = document.querySelector(".formula-input-box");
-let dataObj ={};
+let dataObj = {};
 let lastSelectedCell;
 for(let i = 1;i<=100;i++){
     let div = document.createElement("div");
@@ -35,6 +35,9 @@ for(let i = 1;i<=100;i++){
             formula:undefined,
             upstream:[],
             downstream:[],
+            align:"left",
+            color:"rgba(54, 54, 54, 0.829)",
+            backgroundColor:"white"
         };
         let cellDiv = document.createElement("div");
         cellDiv.contentEditable = true;
@@ -57,13 +60,20 @@ for(let i = 1;i<=100;i++){
     
 }
 
-dataObj["A1"].value = 20;
-dataObj["A1"].downstream = ["B1"];
-dataObj["B1"].value = 40;
-dataObj["B1"].formula = "2 * A1";
-dataObj["B1"].upstream = ["A1"];
+if(localStorage.getItem("sheet")){
+    dataObj = JSON.parse(localStorage.getItem("sheet"));
 
+    for(let x in dataObj){
+        let cell = document.querySelector(`[cell-address='${x}']`);
 
+        if(dataObj[x].value){
+            cell.innerText = dataObj[x].value;
+            cell.style.color = dataObj[x].color;
+            cell.style.backgroundColor  = dataObj[x].backgroundColor;
+            cell.style.textAlign = dataObj[x].align;
+        }
+    }
+}
 // console.log(dataObj);
 cellSection.addEventListener("scroll",function(e){
     console.log(e.currentTarget.scrollLeft);
@@ -75,15 +85,33 @@ formulaInput.addEventListener("keydown",function(e){
     if(e.key != "Enter" || !lastSelectedCell)return;
 
     let selectedCellAddress = lastSelectedCell.getAttribute("cell-address");
-
+    let newFormula = e.currentTarget.value;
     let cellObj = dataObj[selectedCellAddress];
-    cellObj.formula = e.currentTarget.innerText;
+    cellObj.formula = newFormula;
     let cellUpStream = cellObj.upstream;
     for(let i = 0;i<cellUpStream.length;i++){
         removeFromParentDownStream(cellUpStream[i],selectedCellAddress);
     }
 
-    cellObj.upstream = [];
+    cellUpStream = [];
+    let formulaSection = newFormula.split(" ");
+    //adding new formula's variable to upstream;
+    for(let i = 0;i < formulaSection.length;i++){
+        if(formulaSection[i] == "+" || formulaSection[i] =="*" || 
+        formulaSection[i] == "/" || formulaSection[i] == "-" || Number(formulaSection[i])){
+            continue;
+        }
+        cellUpStream.push(formulaSection[i]);
+    }
+    //adding my cell to downstream of parent
+    for(let i = 0;i<cellUpStream.length;i++){
+        addToParentDownStream(cellUpStream[i],selectedCellAddress);
+    }
+
+    cellObj.upstream = cellUpStream;
+
+    //updating my and childrens value;
+    updateChildCell(selectedCellAddress);
     dataObj[selectedCellAddress] = cellObj;
     console.log(dataObj);
 
@@ -94,11 +122,12 @@ function inputHandle(e){
 
     let cellObj = dataObj[address];
     cellObj.value = e.currentTarget.innerText;
+    cellObj.formula  = undefined;
     let cellUpStream = cellObj.upstream;
     for(let i = 0;i<cellUpStream.length;i++){
         removeFromParentDownStream(cellUpStream[i],address);
     }
-
+        
     cellObj.upstream = [];
 
     let cellDownStream = cellObj.downstream;
@@ -107,6 +136,7 @@ function inputHandle(e){
         updateChildCell(cellDownStream[i]);
     }
     dataObj[address] = cellObj;
+    // console.log(dataObj);
 }
 
 
@@ -145,4 +175,9 @@ function updateChildCell(childAdress){
         updateChildCell(childDownStream[i]);
     }
 
+}
+
+
+function addToParentDownStream(parentCellAdress,cellAdress){
+    dataObj[parentCellAdress].downstream.push(cellAdress);
 }
