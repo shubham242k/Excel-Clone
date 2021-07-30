@@ -1,9 +1,4 @@
-let allAlignments = document.querySelectorAll(".text-alignment-section span");
-let body = document.querySelector("body");
-console.log(allAlignments);
-let leftAlign = allAlignments[0];
-let centerAlign = allAlignments[1];
-let rightAlign = allAlignments[2];
+
 
 leftAlign.addEventListener("click",function(e){
     if(!lastSelectedCell)return;
@@ -32,9 +27,6 @@ rightAlign.addEventListener("click",function(e){
     dataObj[address].align = "right";
 });
 
-let ColorOptions = document.querySelectorAll(".color-section span");
-let bgColorPicker = ColorOptions[0];
-let fontColotPicker = ColorOptions[1];
 
 
 bgColorPicker.addEventListener("click",function(e){
@@ -42,7 +34,6 @@ bgColorPicker.addEventListener("click",function(e){
 
     let colorPickerInput = document.createElement("input");
     colorPickerInput.type = "color";
-    body.append(colorPickerInput);
 
     colorPickerInput.click();
 
@@ -51,7 +42,7 @@ bgColorPicker.addEventListener("click",function(e){
         lastSelectedCell.style.backgroundColor = e.currentTarget.value;
         let address = lastSelectedCell.getAttribute("cell-address");
         dataObj[address].backgroundColor =  e.currentTarget.value;
-    
+        
     })
 
 })
@@ -61,7 +52,6 @@ fontColotPicker.addEventListener("click",function(e){
 
     let colorPickerInput = document.createElement("input");
     colorPickerInput.type = "color";
-    body.append(colorPickerInput);
 
     colorPickerInput.click();
 
@@ -75,10 +65,77 @@ fontColotPicker.addEventListener("click",function(e){
 
 })
 
-let menuOptions = document.querySelectorAll(".menu-bar div");
 
-let fileOption = menuOptions[0];
-let helpOption = menuOptions[1];
+fontSizeSelector.addEventListener("click",function(e){
+    if(!lastSelectedCell) return;
+    
+    let sizeOption = e.currentTarget.value;
+    lastSelectedCell.style.fontSize = `${sizeOption}px`;
+
+    let address = lastSelectedCell.getAttribute("cell-address");
+    dataObj[address].fontSize = `${sizeOption}px`;
+    console.log(sizeOption);
+
+
+});
+
+
+bold.addEventListener("click",function(e){
+    if(!lastSelectedCell) return;
+    
+    let address = lastSelectedCell.getAttribute("cell-address");
+    let isBold = dataObj[address].style.bold;
+    if(isBold){
+        e.currentTarget.classList.remove("selected-menu-option");
+        lastSelectedCell.style.fontWeight = "";
+        dataObj[address].style.bold = false;
+    }else{
+        e.currentTarget.classList.add("selected-menu-option");
+        lastSelectedCell.style.fontWeight = "bold";
+        dataObj[address].style.bold = true;
+    }
+   
+    
+})
+
+italic.addEventListener("click",function(e){
+    if(!lastSelectedCell) return;
+    
+    let address = lastSelectedCell.getAttribute("cell-address");
+    let isItalic = dataObj[address].style.italic;
+    if(isItalic){
+        e.currentTarget.classList.remove("selected-menu-option");
+        lastSelectedCell.style.fontStyle = "";
+        dataObj[address].style.italic = false;
+    }else{
+        e.currentTarget.classList.add("selected-menu-option");
+        lastSelectedCell.style.fontStyle = "italic";
+        dataObj[address].style.italic = true;
+    }
+    
+    
+})
+
+underline.addEventListener("click",function(e){
+    if(!lastSelectedCell) return;
+    
+    let address = lastSelectedCell.getAttribute("cell-address");
+    let isUnderline = dataObj[address].style.underline;
+    if(isUnderline){
+        e.currentTarget.classList.remove("selected-menu-option");
+        lastSelectedCell.style.textDecoration = "";
+        dataObj[address].style.underline = false;
+    }else{
+        e.currentTarget.classList.add("selected-menu-option");
+        lastSelectedCell.style.textDecoration = "underline";
+        dataObj[address].style.underline = true;
+    }
+    
+    
+})
+
+
+
 
 fileOption.addEventListener("click",function(e){
     let isOpen = fileOption.getAttribute("open-status");
@@ -102,3 +159,4 @@ fileOption.addEventListener("click",function(e){
         fileOption.append(dropDown);
     }
 })
+

@@ -145,7 +145,7 @@ body{
     align-items: center;
     /* transition: all ease-in 100ms; */
 }
-.row-number:hover,.column-number:hover{
+.row-column-container:hover{
     color: white;
     background-color: rgb(161, 161, 161);
 }
@@ -177,6 +177,8 @@ body{
 }
 
 .cell{
+    align-content: center;
+    padding: 2px;
     width: 80px;
     height: 30px;
     background-color: white;
@@ -210,7 +212,7 @@ body{
 }
 
 .font-section{
-    width: 200px;
+    width: 250px;
 }
 
 .select-bar{
@@ -219,7 +221,7 @@ body{
 }
 
 .select-bar.font-style{
-    width: 120px;
+    width: 140px;
 }
 .select-bar.font-size{
     width: 50px;
@@ -260,4 +262,8 @@ body{
 
 .material-icons:hover{
     background-color: rgba(221, 220, 220, 0.692);
+}
+
+.selected-menu-option{
+    background-color: rgba(220, 221, 221, 0.692);
 }

@@ -3,6 +3,25 @@ let rowsContainer = document.querySelector(".row-number-section");
 let columnsContainer = document.querySelector(".column-number-section");
 let cellAddressShower = document.querySelector(".selected-cell-div");
 let formulaInput = document.querySelector(".formula-input-box");
+let allAlignments = document.querySelectorAll(".text-alignment-section span");
+let ColorOptions = document.querySelectorAll(".color-section span");
+let fontSelections = document.querySelectorAll(".font-section select");
+let styleSelector = document.querySelectorAll(".text-style-section span");
+let menuOptions = document.querySelectorAll(".menu-bar div");
+let body = document.querySelector("body");
+
+let leftAlign = allAlignments[0];
+let centerAlign = allAlignments[1];
+let rightAlign = allAlignments[2];
+let bgColorPicker = ColorOptions[0];
+let fontColotPicker = ColorOptions[1];
+let fontSizeSelector = fontSelections[1];
+let bold = styleSelector[0];
+let italic = styleSelector[1];
+let underline = styleSelector[2];
+let fileOption = menuOptions[0];
+let helpOption = menuOptions[1];
+
 let dataObj = {};
 let lastSelectedCell;
 for(let i = 1;i<=100;i++){
@@ -31,13 +50,20 @@ for(let i = 1;i<=100;i++){
         let alpha = String.fromCharCode(j + 65);
         let cellAddress = alpha + i;
         dataObj[cellAddress] = {
-            value:undefined,
+            value:"",
             formula:undefined,
             upstream:[],
             downstream:[],
             align:"left",
             color:"rgba(54, 54, 54, 0.829)",
-            backgroundColor:"white"
+            backgroundColor:"white",
+            style:{
+                bold : false,
+                italic : false,
+                underline : false,
+            },
+            fontSize : "14px",
+            
         };
         let cellDiv = document.createElement("div");
         cellDiv.contentEditable = true;
@@ -45,12 +71,16 @@ for(let i = 1;i<=100;i++){
         cellDiv.setAttribute("cell-address",cellAddress);
 
         cellDiv.addEventListener("click",function(e){
-            cellAddressShower.innerText = cellDiv.getAttribute("cell-address");
+            let address = cellDiv.getAttribute("cell-address");
+            cellAddressShower.innerText = address;
             if(lastSelectedCell){
                 lastSelectedCell.classList.remove("selected-cell");
             }
             e.currentTarget.classList.add("selected-cell");
             lastSelectedCell = e.currentTarget;
+
+            selectAlltheAttributes(address);
+
         })
 
         cellDiv.addEventListener("input",inputHandle);
@@ -59,10 +89,10 @@ for(let i = 1;i<=100;i++){
     cellSection.append(perRowDiv);
     
 }
-
+console.log(dataObj);
 if(localStorage.getItem("sheet")){
     dataObj = JSON.parse(localStorage.getItem("sheet"));
-
+    console.log(dataObj);
     for(let x in dataObj){
         let cell = document.querySelector(`[cell-address='${x}']`);
 
@@ -71,6 +101,10 @@ if(localStorage.getItem("sheet")){
             cell.style.color = dataObj[x].color;
             cell.style.backgroundColor  = dataObj[x].backgroundColor;
             cell.style.textAlign = dataObj[x].align;
+            cell.style.fontSize = dataObj[x].fontSize;
+            cell.style.fontStyle = dataObj[x].style.italic == true?"italic":"";
+            cell.style.fontWeight = dataObj[x].style.bold == true?"bold":"";
+            cell.style.textDecoration = dataObj[x].style.underline == true?"underline":"";
         }
     }
 }
@@ -84,8 +118,18 @@ cellSection.addEventListener("scroll",function(e){
 formulaInput.addEventListener("keydown",function(e){
     if(e.key != "Enter" || !lastSelectedCell)return;
 
+    
+    
     let selectedCellAddress = lastSelectedCell.getAttribute("cell-address");
     let newFormula = e.currentTarget.value;
+    console.log(dataObj[selectedCellAddress]);
+    let isCycle = checkCycle(selectedCellAddress,newFormula);
+    console.log(isCycle);
+    if(isCycle){
+        // formulaInput.style.color = "red";
+        formulaInput.value = "CYCLE DETECTION";
+        return;
+    } 
     let cellObj = dataObj[selectedCellAddress];
     cellObj.formula = newFormula;
     let cellUpStream = cellObj.upstream;
@@ -180,4 +224,76 @@ function updateChildCell(childAdress){
 
 function addToParentDownStream(parentCellAdress,cellAdress){
     dataObj[parentCellAdress].downstream.push(cellAdress);
+}
+
+
+function selectAlltheAttributes(address){
+
+    leftAlign.classList.remove("selected-menu-option");
+    centerAlign.classList.remove("selected-menu-option");
+    rightAlign.classList.remove("selected-menu-option");
+    bold.classList.remove("selected-menu-option");
+    italic.classList.remove("selected-menu-option");
+    underline.classList.remove("selected-menu-option");
+
+    let obj = dataObj[address];
+    
+    if(obj.align == "left"){
+        leftAlign.classList.add("selected-menu-option");
+    }else if(obj.align == "center"){
+        centerAlign.classList.add("selected-menu-option");
+    }else{
+        rightAlign.classList.add("selected-menu-option");
+    }
+
+    if(dataObj[address].style.bold == true){
+        bold.classList.add("selected-menu-option");
+    }
+
+    if(dataObj[address].style.italic == true){
+        italic.classList.add("selected-menu-option");
+    }
+
+    if(dataObj[address].style.underline == true){
+        underline.classList.add("selected-menu-option");
+    }
+}
+
+function checkCycle(selectedAddress,formula){
+    let visCells = {};
+
+    let upStream = [];
+    let formulaSection = formula.split(" ");
+    //adding new formula's variable to upstream;
+    for(let i = 0;i < formulaSection.length;i++){
+        if(formulaSection[i] == "+" || formulaSection[i] =="*" || 
+        formulaSection[i] == "/" || formulaSection[i] == "-" || Number(formulaSection[i])){
+            continue;
+        }
+        upStream.push(formulaSection[i]);
+    }
+
+    return cycleDf(selectedAddress,visCells,selectedAddress,upStream);
+}
+
+function cycleDf(selectedAddress,visCells,src,upstream){
+    visCells[selectedAddress] = 1;
+
+    let curupstream = [];
+    if(selectedAddress == src){
+        curupstream = upstream;
+    }else{
+        curupstream = dataObj[selectedAddress].upstream;
+    }
+    for(let i = 0;i<curupstream.length;i++){
+        if(visCells[curupstream[i]] == undefined){
+           let res = cycleDf(curupstream[i],visCells,src,upstream);
+           if(res == true) return true;
+        }else if(visCells[curupstream[i]] == 1){
+            return true;
+        }
+    }
+    visCells[selectedAddress] = 2;
+
+    return false;
 }
