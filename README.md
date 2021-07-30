@@ -1,5 +1,8 @@
 # Excel-Clone
 This project is clone of Microsoft Excel which is used by hundreds and Millions of Users throughout the world
+
+https://shubham242k.github.io/Excel-Clone/
+
 ## Features
   ### 1. Cycle Detection in formulas
     User will be informed if he/she will enter one cell's formula that depends on other cell which in turn depend 
