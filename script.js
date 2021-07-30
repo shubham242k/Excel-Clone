@@ -22,6 +22,8 @@ let underline = styleSelector[2];
 let fileOption = menuOptions[0];
 let helpOption = menuOptions[1];
 
+let isCycle = false;
+
 let dataObj = {};
 let lastSelectedCell;
 for(let i = 1;i<=100;i++){
@@ -115,6 +117,14 @@ cellSection.addEventListener("scroll",function(e){
     rowsContainer.style.transform = `translateY(-${e.currentTarget.scrollTop}px)`;
 })
 
+formulaInput.addEventListener("click",function(e){
+    console.log(isCycle + "CLICKING");
+    if(isCycle){
+        formulaInput.value = "";
+        formulaInput.classList.remove("cycle-detection");
+        isCycle = false;
+    }
+})
 formulaInput.addEventListener("keydown",function(e){
     if(e.key != "Enter" || !lastSelectedCell)return;
 
@@ -123,13 +133,16 @@ formulaInput.addEventListener("keydown",function(e){
     let selectedCellAddress = lastSelectedCell.getAttribute("cell-address");
     let newFormula = e.currentTarget.value;
     console.log(dataObj[selectedCellAddress]);
-    let isCycle = checkCycle(selectedCellAddress,newFormula);
+    isCycle = checkCycle(selectedCellAddress,newFormula);
     console.log(isCycle);
     if(isCycle){
         // formulaInput.style.color = "red";
         formulaInput.value = "CYCLE DETECTION";
+        formulaInput.classList.add("cycle-detection");
+
         return;
     } 
+    formulaInput.value = "";
     let cellObj = dataObj[selectedCellAddress];
     cellObj.formula = newFormula;
     let cellUpStream = cellObj.upstream;

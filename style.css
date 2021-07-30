@@ -267,3 +267,9 @@ body{
 .selected-menu-option{
     background-color: rgba(220, 221, 221, 0.692);
 }
+
+.cycle-detection{
+    font-weight: bolder;
+    color: rgb(138, 19, 19);
+    background-color: rgb(233, 157, 157);
+}

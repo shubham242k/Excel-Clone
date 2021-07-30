@@ -34,9 +34,9 @@ bgColorPicker.addEventListener("click",function(e){
 
     let colorPickerInput = document.createElement("input");
     colorPickerInput.type = "color";
-
+    // colorPickerInput.style.cursor = "move"
     colorPickerInput.click();
-
+    
     colorPickerInput.addEventListener("input",function(e){
         if(!lastSelectedCell)return;
         lastSelectedCell.style.backgroundColor = e.currentTarget.value;
@@ -44,6 +44,7 @@ bgColorPicker.addEventListener("click",function(e){
         dataObj[address].backgroundColor =  e.currentTarget.value;
         
     })
+
 
 })
 
@@ -62,6 +63,8 @@ fontColotPicker.addEventListener("click",function(e){
         dataObj[address].color =  e.currentTarget.value;
 
     })
+
+    
 
 })
 
