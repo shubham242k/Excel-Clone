@@ -11,3 +11,4 @@ This project is clone of Microsoft Excel which is used by hundreds and Millions 
   ### 4. Text Styling and Alignment
     User can give styling(BOLD, ITALIC, UNDERLINE) and alignment(LEFT,CENTER, RIGHT) to the cell's input
   
+  https://user-images.githubusercontent.com/67068685/127671228-fa5b446e-1f7b-4800-a472-b0b35bb32ad4.mp4
